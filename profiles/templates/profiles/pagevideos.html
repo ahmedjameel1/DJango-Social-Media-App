@@ -1,0 +1,122 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+
+<link rel="stylesheet" href="{%static 'styles/videos.css' %}">
+
+<div class="container">
+    <div id="content" class="content p-0">
+        <div class="profile-header">
+            <div class="profile-header-cover"></div>
+    
+            <div class="profile-header-content">
+                <div class="profile-header-img">
+                    <img src="{{page.imageURL}}" alt="" />
+                </div>
+    
+                <div class="profile-header-info">
+                    <h4 class="m-t-sm">{{page.title}}</h4>
+                    <p class="m-b-sm">{{page.category}}</p>
+                </div>
+            </div>
+    
+                  <ul class="profile-header-tab nav nav-tabs">
+                    {%if 'viewspage' in request.path%}
+                    <li class="nav-item"><a href="{%url 'page' page.id%}" class="nav-link_ active show">POSTS</a></li>
+                    {%elif 'viewspage' not in request.path%}
+                    <li class="nav-item"><a href="{%url 'page' page.id%}" class="nav-link_ ">POSTS</a></li>
+                    {%endif%}
+                    {%if 'viewpageabout' in request.path%}
+                    <li class="nav-item"><a href="{%url 'aboutpage' page.id%}"  class="nav-link_ active show">ABOUT</a></li>
+                    {%elif 'viewpageabout' not in request.path%}
+                    <li class="nav-item"><a href="{%url 'aboutpage' page.id%}"  class="nav-link_ ">ABOUT</a></li>
+                    {%endif%}
+                    {%if 'viewpagephotos' in request.path%}
+                    <li class="nav-item"><a href="{%url 'pagephotos' page.id%}" tarpath="__blank" class="nav-link_ active show">PHOTOS</a></li>
+                    {%elif 'viewpagephotos' not in request.path%}
+                    <li class="nav-item"><a href="{%url 'pagephotos' page.id%}" tarpath="__blank" class="nav-link_">PHOTOS</a></li>
+                    {%endif%}
+                    {%if 'viewpagevideos'  in request.path%}
+                    <li class="nav-item"><a href="{%url 'pagevideos' page.id%}" tarpath="__blank" class="nav-link_ active show">VIDEOS</a></li>
+                    {%elif 'viewpagevideos' not in request.path%}
+                    <li class="nav-item"><a href="{%url 'pagevideos' page.id%}" tarpath="__blank" class="nav-link_">VIDEOS</a></li>
+                   {%endif%}
+                  </ul>
+        </div>
+    
+        <div class="profile-container">
+            <div class="row row-space-20">
+                <div class="col-md-8">
+                    <div class="tab-content p-0">
+                        <div class="tab-pane active show" id="profile-videos">
+                            <div class="m-b-10"><b>Videos ({{videos.count}})</b></div>
+                                {%for video in videos%}
+                             <div class="row row-space-2">
+                                <div class="col-sm-6"> 
+                                {% comment %}    <div class="embed-responsive embed-responsive-16by9 m-b-2">{% endcomment %}
+                                        <video width="400" height="200" controls >
+                                            <source src="{{video.video.url}}" type="video/mp4"> </source>
+                                          </video>
+                                    {% comment %} </div>{% endcomment %}
+                                </div> 
+    
+                              {%endfor%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                {% comment %} <div class="col-md-4 hidden-xs hidden-sm">
+                    <ul class="profile-info-list">
+                        <li class="title">PERSONAL INFORMATION</li>
+                        <li>
+                            <div class="field">Occupation:</div>
+                            <div class="value">UXUI / Frontend Developer</div>
+                        </li>
+                        <li>
+                            <div class="field">Skills:</div>
+                            <div class="value">C++, PHP, HTML5, CSS, jQuery, MYSQL, Ionic, Laravel, Phonegap, Bootstrap, Angular JS, Angular JS, Asp.net</div>
+                        </li>
+                        <li>
+                            <div class="field">Birth of Date:</div>
+                            <div class="value">1989/11/04</div>
+                        </li>
+                        <li>
+                            <div class="field">Country:</div>
+                            <div class="value">San Francisco</div>
+                        </li>
+                        <li>
+                            <div class="field">Address:</div>
+                            <div class="value">
+                                <address class="m-b-0">
+                                    Twitter, Inc.<br />
+                                    1355 Market Street, Suite 900<br />
+                                    San Francisco, CA 94103
+                                </address>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="field">Phone No.:</div>
+                            <div class="value">
+                                (123) 456-7890
+                            </div>
+                        </li>
+                        <li class="title">FRIEND LIST (9)</li>
+                        <li class="img-list">
+                            <a href="#" class="m-b-5"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" /></a>
+                            <a href="#" class="m-b-5"><img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" /></a>
+                            <a href="#" class="m-b-5"><img src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="" /></a>
+                            <a href="#" class="m-b-5"><img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="" /></a>
+                            <a href="#" class="m-b-5"><img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="" /></a>
+                            <a href="#" class="m-b-5"><img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" /></a>
+                            <a href="#" class="m-b-5"><img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="" /></a>
+                            <a href="#" class="m-b-5"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" /></a>
+                            <a href="#" class="m-b-5"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" /></a>
+                        </li>
+                    </ul>
+                </div> {% endcomment %}
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

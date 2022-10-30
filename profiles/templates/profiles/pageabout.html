@@ -1,0 +1,105 @@
+{%extends 'base.html'%}
+
+{%load static%}
+
+{%block content%}
+<link rel="stylesheet" href="{%static 'styles/about.css' %}">
+<link rel="stylesheet" href="{%static 'styles/photos.css' %}">
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+   <div class="row">
+      <div class="col-md-12">
+         <div id="content" class="content content-full-width">
+            <!-- begin profile -->
+            <div class="profile">
+               <div class="profile-header">
+                  <!-- BEGIN profile-header-cover -->
+                  <div class="profile-header-cover"></div>
+                  <!-- END profile-header-cover -->
+                  <!-- BEGIN profile-header-content -->
+                  <div class="profile-header-content">
+                     <!-- BEGIN profile-header-img -->
+                     <div class="profile-header-img">
+                        <img src="{{page.imageURL}}" alt="">
+                     </div>
+                     <!-- END profile-header-img -->
+                     <!-- BEGIN profile-header-info -->
+                     <div class="profile-header-info">
+                        <h4 class="m-t-10 m-b-5"><a href="{%url 'page' page.id%}">{{page.title}}</a></h4>
+                        <p class="m-b-10">{{page.category}}</p>
+                     </div>
+                     <!-- END profile-header-info -->
+                  </div>
+                  <!-- END profile-header-content -->
+                  <!-- BEGIN profile-header-tab -->
+                  <ul class="profile-header-tab nav nav-tabs">
+                    {%if 'viewspage' in request.path%}
+                     <li class="nav-item"><a href="{%url 'page' page.id%}" class="nav-link_ active show">POSTS</a></li>
+                     {%elif 'viewspage' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'page' page.id%}" class="nav-link_ ">POSTS</a></li>
+                     {%endif%}
+                     {%if 'viewpageabout' in request.path%}
+                     <li class="nav-item"><a href="{%url 'aboutpage' page.id%}"  class="nav-link_ active show">ABOUT</a></li>
+                     {%elif 'viewpageabout' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'aboutpage' page.id%}"  class="nav-link_ ">ABOUT</a></li>
+                     {%endif%}
+                     {%if 'viewpagephotos' in request.path%}
+                     <li class="nav-item"><a href="{%url 'pagephotos' page.id%}" tarpath="__blank" class="nav-link_ active show">PHOTOS</a></li>
+                     {%elif 'viewpagephotos' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'pagephotos' page.id%}" tarpath="__blank" class="nav-link_">PHOTOS</a></li>
+                     {%endif%}
+                     {%if 'viewpagevideos'  in request.path%}
+                     <li class="nav-item"><a href="{%url 'pagevideos' page.id%}" tarpath="__blank" class="nav-link_ active show">VIDEOS</a></li>
+                     {%elif 'viewpagevideos' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'pagevideos' page.id%}" tarpath="__blank" class="nav-link_">VIDEOS</a></li>
+                    {%endif%}
+                  </ul>
+                  <!-- END profile-header-tab -->
+               </div>
+            </div>
+            <!-- end profile -->
+            <!-- begin profile-content -->
+            <div class="profile-content">
+               <!-- begin tab-content -->
+               <div class="tab-content p-0">
+
+                  <!-- begin #profile-about tab -->
+                  <div class="tab-pane fade in active show" id="profile-about">
+                     <!-- begin table -->
+                     <div class="col-md-4 hidden-xs hidden-sm">
+                    <ul class="profile-info-list">
+                        <li class="title">PAGE INFORMATION</li>
+                        <li>
+                            <div class="field">Short Intro:</div>
+                            <div class="value">{{page.category}}</div>
+                        </li>
+                        <li>
+                            <div class="field">Country:</div>
+                            <div class="value">{{page.owner.profile.location}}</div>
+                        </li>
+                        <li>
+                            
+                        </li>
+                    </ul>
+                </div> 
+                     <!-- end table -->
+                  </div>
+                  <!-- end #profile-about tab -->
+               </div>
+               <!-- end tab-content -->
+            </div>
+            <!-- end profile-content -->
+         </div>
+      </div>
+   </div>
+</div>
+    	</div>
+	</div>
+</div>
+  
+{%endblock%}

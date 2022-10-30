@@ -1,0 +1,56 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+<link href="{%static 'styles/friends.css'%}" rel="stylesheet">
+
+  <!-- begin profile-content -->
+  <div class="profile-content">
+    <!-- begin tab-content -->
+    <div class="tab-content p-0">
+       <!-- begin #profile-friends tab -->
+       <div class="tab-pane fade in active show" id="profile-friends">
+          <h4 class="m-t-0 m-b-20">Request List ({{friendrequests.count}})</h4>
+          <!-- begin row -->
+          <div class="row row-space-2">
+             <!-- begin col-6 -->
+{%for frequest in friendrequests%}
+             <div class="col-md-6 m-b-2">
+                <div class="p-10 bg-white">
+                   <div class="media media-xs overflow-visible">
+                      <a class="media-left" href="{%url 'singleprofile' frequest.sender.profile.id%}">
+                      <img src="{{frequest.sender.profile.imageURL}}" alt="" class="media-object img-circle">
+                      </a>
+                      <div class="media-body valign-middle">
+                         <b class="text-inverse">{{frequest.sender.profile.name}}</b>
+                      </div>
+                      <div class="media-body valign-middle text-right overflow-visible">
+                         <div class="btn-group dropdown">
+                            <a href="javascript:;" class="btn btn-default">Action</a>
+                            <a href="javascript:;" data-toggle="dropdown" class="btn btn-default dropdown-toggle"></a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                               {% comment %} remove from friends {% endcomment %}
+                               <li><a href="{%url 'acceptrequest' frequest.id%}" class="btn btn-primary">Accpet</a></li>
+                               <li><a href="{%url 'refuserequest' frequest.id%}" class="btn btn-danger">Refuse</a></li>
+
+                               
+                            </ul>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <!-- end col-6 -->
+             
+       {%endfor%}
+         
+          
+          </div>
+          <!-- end row -->
+       </div>
+       <!-- end #profile-friends tab -->
+    </div>
+    <!-- end tab-content -->
+ </div>
+ <!-- end profile-content -->
+
+{%endblock%}

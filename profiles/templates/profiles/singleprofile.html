@@ -1,0 +1,140 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block content%}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{%static 'styles/profile.css'%}">
+
+<div class="container">
+   <div class="row">
+      <div class="col-md-12">
+         <div id="content" class="content content-full-width">
+            <!-- begin profile -->
+            <div class="profile">
+               <div class="profile-header">
+                  <!-- BEGIN profile-header-cover -->
+                  <div class="profile-header-cover"></div>
+                  <!-- END profile-header-cover -->
+                  <!-- BEGIN profile-header-content -->
+                  <div class="profile-header-content">
+                     <!-- BEGIN profile-header-img -->
+                     <div class="profile-header-img">
+                        <img src="{{profile.imageURL}}" alt="">
+                     </div>
+                     <!-- END profile-header-img -->
+                     <!-- BEGIN profile-header-info -->
+                     <div class="profile-header-info">
+                        <h4 class="m-t-10 m-b-5">{{profile.name}}</h4>
+                        <p class="m-b-10">{{profile.short_intro}}</p>
+                        {%if afriend == False and profile != request.user.profile and requestexists == False%}
+                        <a href="{%url 'addfriend' profile.id%}" class="btn btn-sm btn-info mb-2">Add Friend</a>
+                        {%elif afriend == True and profile != request.user.profile%}
+                        <a href="{%url 'sendmessage' profile.id%}" class="btn btn-sm btn-info mb-2">Message</a>
+                        {%elif afriend == False and profile != request.user.profile and requestexists == True%}
+                        <span  class="btn btn-primary">Request Sent</span>
+                        {%elif afriend == True and profile != request.user.profile%}
+                        <span  class="btn btn-success">Friends</span>
+                        {%endif%}
+                        {%if profile.id == request.user.profile.id%}
+                        <a href="{%url 'editProfile'%}" class="btn btn-sm btn-info mb-2">Edit Profile</a>
+                        {%endif%}
+                     </div>
+                     <!-- END profile-header-info -->
+                  </div>
+                  <!-- END profile-header-content -->
+                  <!-- BEGIN profile-header-tab -->
+                  <ul class="profile-header-tab nav nav-tabs">
+                     {%if 'singleprofile' in request.path%}
+                     <li class="nav-item"><a href="{%url 'singleprofile' profile.id%}" class="nav-link_ active show">POSTS</a></li>
+                     {%elif 'singleprofile' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'singleprofile' profile.id%}" class="nav-link_ ">POSTS</a></li>
+                     {%endif%}
+                     {%if 'about' in request.path%}
+                     <li class="nav-item"><a href="{%url 'about' profile.id%}"  class="nav-link_ active show">ABOUT</a></li>
+                     {%elif 'about' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'about' profile.id%}"  class="nav-link_ ">ABOUT</a></li>
+                     {%endif%}
+                     {%if 'photos' in request.path%}
+                     <li class="nav-item"><a href="{%url 'photos' profile.id%}" tarpath="__blank" class="nav-link_ active show">PHOTOS</a></li>
+                     {%elif 'photos' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'photos' profile.id%}" tarpath="__blank" class="nav-link_">PHOTOS</a></li>
+                     {%endif%}
+                     {%if 'videos'  in request.path%}
+                     <li class="nav-item"><a href="{%url 'videos' profile.id%}" tarpath="__blank" class="nav-link_ active show">VIDEOS</a></li>
+                     {%elif 'videos' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'videos' profile.id%}" tarpath="__blank" class="nav-link_">VIDEOS</a></li>
+                    {%endif%}
+                     {%if 'friends'  in request.path%}
+                     <li class="nav-item"><a href="{%url 'friends' profile.id%}" tarpath="__blank" class="nav-link_ active show">FRIENDS</a></li>
+                     {%elif 'friends' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'friends' profile.id%}" tarpath="__blank" class="nav-link_">FRIENDS</a></li>
+                     {%endif%}
+                  </ul>
+                  <!-- END profile-header-tab -->
+               </div>
+            </div>
+            <!-- end profile -->
+            <!-- begin profile-content -->
+            <div class="profile-content">
+               <!-- begin tab-content -->
+               <div class="tab-content p-0">
+                  <!-- begin #profile-post tab -->
+                  <div class="tab-pane fade active show" id="profile-post">
+                     <!-- begin timeline -->
+                     <ul class="timeline">
+                        <li>
+                           {%for post in posts%}
+
+                           
+                           <!-- begin timeline-body -->
+                           <div class="timeline-body">
+                              <div class="timeline-header">
+                                 <span class="userimage"><img src="{{post.owner.imageURL}}" alt=""></span>
+                                 <span class="username"><a href="{%url 'singleprofile' post.owner.id%}">{{post.owner.name}}</a> <small></small></span>
+                                 <span class="username"><small>{{post.updated_at}}</small></span>
+                                 {%if post.owner == request.user.profile%}
+                                 <span class="username"><a class="btn btn-primary" href="{%url 'editPost' post.id%}">Edit</a></span>
+                                 <span class="username"><a onclick="return confirm('are you sure you want to delete this post?')" class="btn btn-danger" href="{%url 'deletePost' post.id%}">Delete</a></span>
+                                 {%endif%}
+                              </div>
+                              <div class="timeline-content">
+                                 <p>
+                                    {{post.text}}
+                                 </p>
+                                 {%if post.imageURL != 'None'%}
+                                 <p>
+                                    <img width="100%" src="{{post.imageURL}}">
+                                 </p>
+                                 {%endif%}
+                              </div>
+                              <div class="timeline-likes">
+                                 <div class="stats-right">
+                                    <span class="stats-text"><a href="{%url 'viewcomments' post.id%}">{{post.comment_set.all.count}} Comment{{post.comment_set.all.count|pluralize:"s"}}</a></span>
+                                 </div>
+                                 <div class="stats">
+                                    </span>
+                                    <span class="fa-stack fa-fw stats-icon">
+                                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                    <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                    <span class="stats-total">{{post.like_set.all.count}}</span>
+                                 </div>
+                              </div>
+                              <div class="timeline-footer">
+                                 <a href="{%url 'addLike' post.id%}" class="m-r-15 text-inverse-lighter"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                                 <a href="{%url 'addComment' post.id%}" class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                              </div>
+                           </div>
+                           <!-- end timeline-body -->   
+                           {%endfor%}                       
+                  </div>
+                  <!-- end #profile-post tab -->
+               </div>
+               <!-- end tab-content -->
+            </div>
+            <!-- end profile-content -->
+         </div>
+      </div>
+   </div>
+</div>
+{%endblock%}

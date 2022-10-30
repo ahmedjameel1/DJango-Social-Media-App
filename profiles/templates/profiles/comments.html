@@ -1,0 +1,116 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block content%}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{%static 'styles/profile.css'%}">
+
+<div class="container">
+   <div class="row">
+      <div class="col-md-12">
+         <div id="content" class="content content-full-width">
+            <!-- begin profile -->
+            
+            <!-- begin profile-content -->
+            <div class="profile-content">
+               <!-- begin tab-content -->
+               <div class="tab-content p-0">
+                  <!-- begin #profile-post tab -->
+                  <div class="tab-pane fade active show" id="profile-post">
+                     <!-- begin timeline -->
+                     <ul class="timeline">
+                        <li>
+                           
+                           <div class="timeline-body">
+                              <div class="timeline-header">
+                                 {%if post.owner%}
+                                 <span class="userimage"><img src="{{post.owner.imageURL}}" alt=""></span>
+                                 <span class="username"><a href="{%url 'singleprofile' profile.id%}">{{post.owner.name}}</a> <small></small></span>
+                                 {%elif post.page%}
+                                 <span class="userimage"><img src="{{post.page.imageURL}}" alt=""></span>
+                                 <span class="username"><a href="{%url 'page' post.page.id%}">{{post.page.title}}</a> <small></small></span>
+                                 {%endif%}
+                                 <span class="username"><small>{{comment.post.updated_at}}</small></span>
+                                 {%if post.page.owner == request.user%}
+                                 <span class="username"><a class="btn btn-primary" href="{%url 'editpagepost' post.id%}">Edit</a></span>
+                                 <span class="username"><a class="btn btn-danger" onclick="return confirm('are you sure you want to delete this comment?')" href="{%url 'deletePost' post.id%}">Delete</a></span>
+
+                                 {%endif%}
+                              </div>
+                              <div class="timeline-content">
+                                 <p>
+                                    {{post.text}}
+                                 </p>
+                                 {%if post.imageURL != 'None'%}
+                                 <p>
+                                    <img width="100%" src="{{post.imageURL}}">
+                                 </p>
+                                 {%endif%}
+                                 </p>
+                              </div>
+                              <div class="timeline-likes">
+                                 <div class="stats">
+                                    </span>
+                                    <span class="fa-stack fa-fw stats-icon">
+                                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                    <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                    <span class="stats-total">{{post.like_set.all.count}}</span>
+                                 </div>
+                                </div>
+                                <div class="timeline-footer">
+                                    <a class="m-r-15 text-inverse-lighter" href="{%url 'addLike' post.id%}" ><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                                    <a href="{%url 'addComment' post.id%}" class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                                 </div>
+                           </div>
+                           <br>
+                           <p class='text-center'>Comments</P>
+{%for comment in comments%}
+                           <!-- begin timeline-time -->
+                           
+                           <!-- end timeline-icon -->
+                           <!-- begin timeline-body -->
+                           <div class="timeline-body">
+                              <div class="timeline-header">
+                                 <span class="userimage"><img src="{{comment.owner.imageURL}}" alt=""></span>
+                                 <span class="username"><a href="{%url 'singleprofile' comment.owner.id%}">{{comment.owner.name}}</a> <small></small></span>
+                                 <span class="username"><small>{{comment.updated_at}}</small></span>
+                                 {%if comment.owner == request.user.profile%}
+                                 <span class="username"><a class="btn btn-primary" href="{%url 'editComment' comment.id%}">Edit</a></span>
+                                 <span class="username"><a class="btn btn-danger" onclick="return confirm('are you sure you want to delete this comment?')" href="{%url 'deleteComment' comment.id%}">Delete</a></span>
+
+                                 {%endif%}
+                              </div>
+                              <div class="timeline-content">
+                                 <p>
+                                    {{comment.text}}
+                                 </p>
+                                 
+                              </div>
+                              <div class="timeline-likes">
+                                 <div class="stats">
+                                    </span>
+                                    <span class="fa-stack fa-fw stats-icon">
+                                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                    <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                    <span class="stats-total">{{comment.like_set.all.count}}</span>
+                                 </div>
+                                </div>
+                                <div class="timeline-footer">
+                                    <a class="m-r-15 text-inverse-lighter" href="{%url 'addcommentLike' comment.id%}" ><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                                 </div>
+                           </div>
+                           <!-- end timeline-body -->   
+                           {%endfor%}
+                  </div>
+                  <!-- end #profile-post tab -->
+               </div>
+               <!-- end tab-content -->
+            </div>
+            <!-- end profile-content -->
+         </div>
+      </div>
+   </div>
+</div>
+{%endblock%}

@@ -1,0 +1,33 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+<link href="{%static 'styles/friends.css'%}" rel="stylesheet">
+
+  <!-- begin profile-content -->
+  <div class="profile-content">
+    <!-- begin tab-content -->
+    <div class="tab-content p-0">
+       <!-- begin #profile-friends tab -->
+       
+             <div class="col-md-6 m-b-2">
+                <div class="p-10 bg-white">
+                   <div class="media media-xs overflow-visible">
+                    
+                        <p class="text-inverse"><b>Message: </b>{{unreadmessage.body}}</p>
+
+
+                      
+                   </div>
+                </div>
+             </div>
+             <!-- end col-6 -->
+             
+         
+          
+       
+    </div>
+    <!-- end tab-content -->
+ </div>
+ <!-- end profile-content -->
+
+{%endblock%}

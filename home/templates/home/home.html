@@ -1,0 +1,122 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block content%}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{%static 'styles/profile.css'%}">
+
+<div class="container">
+   <div class="row">
+      <div class="col-md-12">
+         <div id="content" class="content content-full-width">
+            <!-- begin profile -->
+            <div class="profile">
+               </div>
+            </div>
+            <!-- end profile -->
+            <!-- begin profile-content -->
+            <div class="profile-content">
+               <!-- begin tab-content -->
+               <div class="tab-content p-0">
+                  <!-- begin #profile-post tab -->
+                  <div class="tab-pane fade active show" id="profile-post">
+                     <!-- begin timeline -->
+                     <ul class="timeline">
+                        <li>
+                            {%if not posts and not users and not pages%}
+                            <br><br><br><br><br><br>
+<h1 class="text-center">No Results.</h1>
+                              {%endif%} 
+                           {%for post in posts%}
+
+                           
+                           <!-- begin timeline-body -->
+                           <div class="timeline-body">
+                              <div class="timeline-header">
+                                 {%if post.page%}
+                                 <span class="userimage"><img src="{{post.page.imageURL}}" alt=""></span>
+                              {%elif post.owner%}
+                                 <span class="userimage"><img src="{{post.owner.imageURL}}" alt=""></span>
+                                 {%endif%}
+                                 {%if post.page%}
+                                 <span class="username"><a href="{% url 'page' post.page.id %}">{{post.page.title}}</a></span>
+                                 {%elif post.owner %}
+                                 <span class="username"><a href="{% url 'singleprofile' post.owner.id %}">{{post.owner.name}}</a></span>
+                                 {%endif%}
+                                 <span class="username"><small>{{post.updated_at}}</small></span>
+
+                              </div>
+                              <div class="timeline-content">
+                                 <p>
+                                    {{post.text}}
+                                 </p>
+                                 {%if post.imageURL != 'None'%}
+                                 <p>
+                                    <img width="100%" src="{{post.imageURL}}">
+                                 </p>
+                                 {%endif%}
+                              </div>
+                              <div class="timeline-likes">
+                                 <div class="stats-right">
+                                    <span class="stats-text"><a href="{%url 'viewcomments' post.id%}">{{post.comment_set.all.count}} Comment{{post.comment_set.all.count|pluralize:"s"}}</a></span>
+                                 </div>
+                                 <div class="stats">
+                                    </span>
+                                    <span class="fa-stack fa-fw stats-icon">
+                                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                    <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                    <span class="stats-total">{{post.like_set.all.count}}</span>
+                                 </div>
+                              </div>
+                              <div class="timeline-footer">
+                                 <a href="{%url 'addLike' post.id%}" class="m-r-15 text-inverse-lighter"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                                 <a href="{%url 'addComment' post.id%}" class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                              </div>
+                           </div>
+                           <!-- end timeline-body -->   
+                           {%endfor%}          
+                           {%if users%}      
+                           {%for user in users%}
+
+                           
+                           <!-- begin timeline-body -->
+                         
+                           <div class="timeline-body">
+                              <div class="timeline-header">
+                              
+
+                              
+                                 <span class="userimage"><a href="{% url 'singleprofile' user.id %}"><img src="{{user.imageURL}}" alt=""></a></span>                                                 
+                                 <span class="username"><a href="{% url 'singleprofile' user.id %}">{{user.name}}</a></span>
+                                 
+                              </div>
+                           </div>
+                           <!-- end timeline-body -->   
+                           {%endfor%}                       
+                           {%endif%}     
+                           {%if pages%}
+                           {%for page in pages%}
+
+                           <div class="timeline-body">
+                              <div class="timeline-header">
+                              
+                           <!-- begin timeline-body -->
+                           <apan class="username"><a href="{%url 'page' page.id%}">{{page.title}}</a></apan>
+                           <span class="userimage"><a href="{%url 'page' page.id%}"><img src="{{page.imageURL}}" alt=""></a></span>
+
+                              </div>
+                           </div>
+                           {%endfor%}                       
+                           {%endif%}  
+                  </div>
+                  <!-- end #profile-post tab -->
+               </div>
+               <!-- end tab-content -->
+            </div>
+            <!-- end profile-content -->
+         </div>
+      </div>
+   </div>
+</div>
+{%endblock%}

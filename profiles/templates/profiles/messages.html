@@ -1,0 +1,125 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+<link href="{%static 'styles/friends.css'%}" rel="stylesheet">
+
+  <!-- begin profile-content -->
+  <div class="profile-content">
+    <!-- begin tab-content -->
+    <div class="tab-content p-0">
+       <!-- begin #profile-friends tab -->
+       <div class="tab-pane fade in active show" id="profile-friends">
+          <h4 class="m-t-0 m-b-20">Unread Messages ({{unreadmessages.count}})</h4>
+          <!-- begin row -->
+          <div class="row row-space-2">
+             <!-- begin col-6 -->
+{%for message in allmessages%}
+{%if message.is_read == False%}
+             <div class="col-md-6 mb-4">
+                <div class="p-10 bg-white">
+                   <div class="media media-xs overflow-visible">
+                      <a class="media-left" href="{%url 'singleprofile' message.sender.id%}">
+                      <img src="{{message.sender.imageURL}}" alt="" class="media-object img-circle">
+                      </a>
+                      <div class="media-body valign-middle">
+                        {%if message.sender%}
+                         <b>Sender Name: </b><a class="media-left" href="{%url 'singleprofile' message.sender.id%}">{{message.sender.name}}</a> 
+                         {%else%}
+                         <p class="text-inverse"><b>Sender Name: </b>{{message.name}}</p>
+                        {%endif%}
+                       <b>Subject: </b><a class="media-left" href="{%url 'message' message.id%}">{{message.subject}}</a>
+                        <p class="text-inverse"><b>Email: </b><b>{{message.email}}</b></p>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <!-- end col-6 --><br>
+             {%else%}
+             <div class="col-md-6 mb-4">
+               <div class="p-10 bg-white">
+                  <div class="media media-xs overflow-visible">
+                     <a class="media-left" href="{%url 'singleprofile' message.sender.id%}">
+                     <img src="{{message.sender.imageURL}}" alt="" class="media-object img-circle">
+                     </a>
+                     <div class="media-body valign-middle">
+                       {%if message.sender%}
+                        Sender Name: <a class="media-left" href="{%url 'singleprofile' message.sender.id%}">{{message.sender.name}}</a> 
+                        {%else%}
+                        <p class="text-inverse">Sender Name: {{message.name}}</p>
+                       {%endif%}
+                      Subject: <a class="media-left" href="{%url 'message' message.id%}">{{message.subject}}</a>
+                       <p class="text-inverse">Email: {{message.email}}</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {%endif%}
+       {%endfor%}
+<br><hr><br>
+<div class="tab-pane fade in active show" id="profile-friends">
+   <h4 class="m-t-0 m-b-20">Sent Messages</h4>
+   <!-- begin row -->
+   <div class="row row-space-2">
+
+       {%for message in sentmessages%}
+{%if message.is_read == False%}
+             <div class="col-md-6 mb-4">
+                <div class="p-10 bg-white">
+                   <div class="media media-xs overflow-visible">
+                      <a class="media-left" href="{%url 'singleprofile' message.sender.id%}">
+                      <img src="{{message.sender.imageURL}}" alt="" class="media-object img-circle">
+                      </a>
+                      <div class="media-body valign-middle">
+                        {%if message.sender%}
+                         <b>Sender Name: </b><a class="media-left" href="{%url 'singleprofile' message.sender.id%}">{{message.sender.name}}</a> 
+                         {%else%}
+                         <p class="text-inverse"><b>Sender Name: </b>{{message.name}}</p>
+                        {%endif%}
+                       <b>Subject: </b><a class="media-left" href="{%url 'message' message.id%}">{{message.subject}}</a>
+                        <p class="text-inverse"><b>Email: </b><b>{{message.email}}</b></p>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <!-- end col-6 --><br>
+             {%else%}
+             <div class="col-md-6 mb-4">
+               <div class="p-10 bg-white">
+                  <div class="media media-xs overflow-visible">
+                     <a class="media-left" href="{%url 'singleprofile' message.sender.id%}">
+                     <img src="{{message.sender.imageURL}}" alt="" class="media-object img-circle">
+                     </a>
+                     <div class="media-body valign-middle">
+                       {%if message.sender%}
+                        Sender Name: <a class="media-left" href="{%url 'singleprofile' message.sender.id%}">{{message.sender.name}}</a> 
+                        {%else%}
+                        <p class="text-inverse">Sender Name: {{message.name}}</p>
+                       {%endif%}
+                      Subject: <a class="media-left" href="{%url 'message' message.id%}">{{message.subject}}</a>
+                       <p class="text-inverse">Email: {{message.email}}</p>
+                       <br>
+                       {%if message.is_read == False%}
+                       <p class="text-inverse"><b>Status:</b>Message Not Read.</p>
+                       {%endif%}
+                       {%if message.is_read == True%}
+                       <p class="text-inverse"><b>Status:</b> Message Read.</p>
+                        {%endif%}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {%endif%}
+       {%endfor%}
+         </div>
+      </div>
+          </div>
+          <!-- end row -->
+       </div>
+       <!-- end #profile-friends tab -->
+    </div>
+    <!-- end tab-content -->
+ </div>
+ <!-- end profile-content -->
+
+
+{%endblock%}

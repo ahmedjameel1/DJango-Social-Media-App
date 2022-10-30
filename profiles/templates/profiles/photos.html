@@ -1,0 +1,113 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+
+<link rel="stylesheet" href="{%static 'styles/photos.css' %}">
+
+<div id="content" class="container p-0">
+    <div class="profile-header">
+        <div class="profile-header-cover"></div>
+        <div class="profile-header-content">
+            <div class="profile-header-img">
+                <img src="{{profile.imageURL}}" alt="" />
+            </div>
+            <div class="profile-header-info">
+                <h4 class="m-t-sm">{{profile.name}}</h4>
+                <p class="m-b-sm">{{profile.short_intro}}</p>
+                {%if profile.id == request.user.profile.id%}
+                        <a href="{%url 'editProfile'%}" class="btn btn-sm btn-info mb-2">Edit Profile</a>
+                {%endif%}
+            </div>
+        </div>
+
+                  <ul class="profile-header-tab nav nav-tabs">
+                    {%if 'singleprofile' in request.path%}
+                     <li class="nav-item"><a href="{%url 'singleprofile' profile.id%}" class="nav-link_ active show">POSTS</a></li>
+                     {%elif 'singleprofile' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'singleprofile' profile.id%}" class="nav-link_ ">POSTS</a></li>
+                     {%endif%}
+                     {%if 'about' in request.path%}
+                     <li class="nav-item"><a href="{%url 'about' profile.id%}"  class="nav-link_ active show">ABOUT</a></li>
+                     {%elif 'about' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'about' profile.id%}"  class="nav-link_ ">ABOUT</a></li>
+                     {%endif%}
+                     {%if 'photos' in request.path%}
+                     <li class="nav-item"><a href="{%url 'photos' profile.id%}" tarpath="__blank" class="nav-link_ active show">PHOTOS</a></li>
+                     {%elif 'photos' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'photos' profile.id%}" tarpath="__blank" class="nav-link_">PHOTOS</a></li>
+                     {%endif%}
+                     {%if 'videos'  in request.path%}
+                     <li class="nav-item"><a href="{%url 'videos' profile.id%}" tarpath="__blank" class="nav-link_ active show">VIDEOS</a></li>
+                     {%elif 'videos' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'videos' profile.id%}" tarpath="__blank" class="nav-link_">VIDEOS</a></li>
+                    {%endif%}
+                     {%if 'friends'  in request.path%}
+                     <li class="nav-item"><a href="{%url 'friends' profile.id%}" tarpath="__blank" class="nav-link_ active show">FRIENDS</a></li>
+                     {%elif 'friends' not in request.path%}
+                     <li class="nav-item"><a href="{%url 'friends' profile.id%}" tarpath="__blank" class="nav-link_">FRIENDS</a></li>
+                     {%endif%}
+                  </ul>
+    </div>
+
+    <div class="profile-container">
+        <div class="row row-space-20">
+            <div class="col-md-8">
+                <div class="tab-content p-0">
+                    <div class="tab-pane active show" id="profile-photos">
+                        <div class="m-b-10"><b>Photos ({{photos.count}})</b></div>
+                        <ul class="img-grid-list">
+                            {%for photo in photos%}
+                            <li>
+                                <a href="{{photo.image.url}}"><img src="{{photo.image.url}}" alt="{{photo.name}}" class="img-portrait" /></a>
+                            </li>
+                           {%endfor%}
+                        </ul>
+                    </div>                    
+                </div>
+            </div>
+
+            {% comment %} <div class="col-md-4 hidden-xs hidden-sm">
+                <ul class="profile-info-list">
+                    <li class="title">PERSONAL INFORMATION</li>
+                    <li>
+                        <div class="field">Occupation:</div>
+                        <div class="value">UXUI / Frontend Developer</div>
+                    </li>
+                    <li>
+                        <div class="field">Skills:</div>
+                        <div class="value">C++, PHP, HTML5, CSS, jQuery, MYSQL, Ionic, Laravel, Phonegap, Bootstrap, Angular JS, Angular JS, Asp.net</div>
+                    </li>
+                    <li>
+                        <div class="field">Birth of Date:</div>
+                        <div class="value">1989/11/04</div>
+                    </li>
+                    <li>
+                        <div class="field">Country:</div>
+                        <div class="value">San Francisco</div>
+                    </li>
+    
+                    <li>
+                        <div class="field">Phone No.:</div>
+                        <div class="value">
+                            (123) 456-7890
+                        </div>
+                    </li>
+                     <li class="title">FRIEND LIST (9)</li>
+                    <li class="img-list">
+                        <a href="#" class="m-b-5"><img src="https://via.placeholder.com/150x150/008B8B/000000" alt="" /></a>
+                        <a href="#" class="m-b-5"><img src="https://via.placeholder.com/150x150/008B8B/000000" alt="" /></a>
+                        <a href="#" class="m-b-5"><img src="https://via.placeholder.com/150x150/008B8B/000000" alt="" /></a>
+                        <a href="#" class="m-b-5"><img src="https://via.placeholder.com/150x150/008B8B/000000" alt="" /></a>
+                        <a href="#" class="m-b-5"><img src="https://via.placeholder.com/150x150/008B8B/000000" alt="" /></a>
+                        <a href="#" class="m-b-5"><img src="https://via.placeholder.com/150x150/008B8B/000000" alt="" /></a>
+                        <a href="#" class="m-b-5"><img src="https://via.placeholder.com/150x150/008B8B/000000" alt="" /></a>
+                        <a href="#" class="m-b-5"><img src="https://via.placeholder.com/150x150/008B8B/000000" alt="" /></a>
+                        <a href="#" class="m-b-5"><img src="https://via.placeholder.com/150x150/008B8B/000000" alt="" /></a>
+                    </li> {% endcomment %} 
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
